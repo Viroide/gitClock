@@ -1,0 +1,2 @@
+[build]
+  functions = "src/my_functions"

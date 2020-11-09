@@ -1,0 +1,14 @@
+{
+  "name": "gitclock",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Viroide",
+  "license": "ISC",
+  "dependencies": {
+    "@octokit/core": "^3.2.1"
+  }
+}
