@@ -18,6 +18,10 @@ exports.handler = async () => {
     }));
     return {
         statusCode: 200,
+        headers: {
+            'Allow': 'GET',
+            'Content-Type': 'application/json',
+        },
         body: JSON.stringify(prResume)
     };
 };
