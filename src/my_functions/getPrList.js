@@ -8,11 +8,12 @@ exports.handler = async () => {
     const prResume = await Promise.all(prList.data.items.map(async pr => {
         const prInfo = await octokit.request("GET " + pr.pull_request.url, {});
         const prStatus = await octokit.request("GET " + prInfo.data.statuses_url, {});
+        const state = prStatus.data.length > 0? prStatus.data[0].state : "unknown";
         return {
             id: pr.id,
             title: pr.title,
             comments: pr.comments,
-            state: prStatus.data[0].state
+            state
         };
     }));
     return {
