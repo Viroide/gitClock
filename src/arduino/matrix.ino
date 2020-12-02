@@ -22,9 +22,11 @@
 #define UPADTE_INTERVAL 60
 
 JSONVar prList;
+JSONVar lastPrList;
 #define TIME_BUFFER_SIZE 5
 char timeBuffer[TIME_BUFFER_SIZE];
 bool firstTime = true;
+bool blink = true;
 DateTime lastUpdate;
 DateTime now;
 
@@ -81,6 +83,7 @@ void loop() {
 
   if (firstTime || (lastUpdate.unixtime() + UPADTE_INTERVAL < now.unixtime()) ) {
     firstTime = false;
+    lastPrList = prList;
     readPrInfo();
     lastUpdate = now;
   }
