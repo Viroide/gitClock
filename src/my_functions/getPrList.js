@@ -7,15 +7,24 @@ exports.handler = async () => {
   const prList = await octokit.request("GET /search/issues", { q });
   const prResume = await Promise.all(prList.data.items.map(async pr => {
     const prInfo = await octokit.request("GET " + pr.pull_request.url, {});
-    const prStatus = await octokit.request("GET " + prInfo.data.statuses_url, {});
-    const state = prStatus.data.length > 0 ? prStatus.data[0].state : "unknown";
+
+    let state = "";
+    prInfo.data.draft ? "unknown" : "success"
+    if (prInfo.data.draft) {
+      state = "unknown";
+    } else if (prInfo.data.mergeable) {
+      state = "success";
+    } else {
+      state = "error";
+    }
     return {
       id: pr.id,
       title: pr.title,
-      comments: pr.comments,
+      comments: pr.comments - 1,
       state
     };
   }));
+
   return {
     statusCode: 200,
     headers: {
